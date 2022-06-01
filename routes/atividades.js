@@ -5,13 +5,16 @@ module.exports = (app)=>{
         const atividades = require("../models/atividades")
         var gravar = await new atividades({
             data:dados.data,
-            tipo:dados.entrega,
+            tipo:dados.tipo,
             entrega:dados.entrega,
             disciplina:dados.disciplina,
             instrucoes:dados.orientacoes,
-            usuario:dados.id
+            usuario:dados.id,
+            titulo:dados.titulo
         }).save()
+        //buscas as atividades do usuario
+        var buscar = await atividades.find({usuario:dados.id})
         //reload page
-        res.render('atividades.ejs',{nome:dados.nome,id:dados.id})
+        res.render('atividades.ejs',{nome:dados.nome,id:dados.id,topicos:buscar})
     })
 }
